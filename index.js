@@ -15,15 +15,23 @@ let password = "";
 let passwordLength = 10;
 let checkCount = 0;
 handleSlider();
-setIndicator("#ccc"); // Set initial indicator color
+setIndicator("#ccc"); 
 
 function handleSlider() {
     inputSlider.value = passwordLength;
     lengthDisplay.innerText = passwordLength;
+    const min = inputSlider.min;
+    const max = inputSlider.max;
+    const percent = ((passwordLength - min) * 100) / (max - min);
+    inputSlider.style.background = `linear-gradient(to right, var(--vb-violet) ${percent}%, var(--lt-violet) ${percent}%)`;
 }
+
+
+
 
 function setIndicator(color) {
     indicator.style.backgroundColor = color;
+    indicator.style.boxShadow = `0px 0px 12px 1px ${color}`;
 }
 
 function getRndInteger(min, max) {
@@ -31,15 +39,15 @@ function getRndInteger(min, max) {
 }
 
 function generateRandomNumber() {
-    return String.fromCharCode(getRndInteger(48, 57)); // ASCII for 0–9
+    return String.fromCharCode(getRndInteger(48, 57)); 
 }
 
 function generateRandomLowerCase() {
-    return String.fromCharCode(getRndInteger(97, 122)); // ASCII for a–z
+    return String.fromCharCode(getRndInteger(97, 122)); 
 }
 
 function generateRandomUpperCase() {
-    return String.fromCharCode(getRndInteger(65, 90)); // ASCII for A–Z
+    return String.fromCharCode(getRndInteger(65, 90));
 }
 
 function generateRandomSymbol() {
@@ -54,11 +62,11 @@ function calcStrength() {
     const hasSym = symbolsCheck.checked;
 
     if (hasUpper && hasLower && (hasNum || hasSym) && passwordLength >= 8) {
-        setIndicator("#0f0"); // Strong
+        setIndicator("#0f0"); 
     } else if ((hasLower || hasUpper) && (hasNum || hasSym) && passwordLength >= 6) {
-        setIndicator("#ff0"); // Medium
+        setIndicator("#ff0"); 
     } else {
-        setIndicator("#f00"); // Weak
+        setIndicator("#f00");
     }
 }
 
@@ -77,12 +85,12 @@ async function copyContent() {
 }
 
 function shufflePassword() {
-    const array = [...password]; // Convert string to array
+    const array = [...password]; 
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]]; // Swap
+        [array[i], array[j]] = [array[j], array[i]]; 
     }
-    return array.join(""); // Convert back to string
+    return array.join(""); 
 }
 
 inputSlider.addEventListener("input", (e) => {
